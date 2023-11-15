@@ -58,8 +58,8 @@ export default {
         this.title = ''
         this.description = ''
       },
-      async deleteTodo(todo) {
-        await axios.delete('api/Todolist/' + _item.id)
+      async deleteTodo(item, index) {
+        await axios.delete('api/Todolist/' + item._id)
         this.todos.splice(index, 1)
       },
     }
