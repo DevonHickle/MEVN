@@ -10,7 +10,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use('./routes/api/Todolist', TodoListRoutes)
 
-const uri = "mongodb+srv://devonhickle:Crowing33@cluster1.8nqhkve.mongodb.net/?retryWrites=true&w=majority"
+const uri = process.env.MONGODB_URI
 
 const client = new MongoClient(uri, {
   serverApi: {
