@@ -21,8 +21,10 @@
     <div class="todo-container">
       <ul>
         <li v-for="(todo, index) in todos" :key="todo._id">
-          <h4 class="todo-name">{{ todo.title }}</h4>
-          <span class="todo-description">{{ todo.description }}</span>
+          <div class="todo">
+            <h4 class="todo-name">{{ todo.title }}</h4>
+            <span class="todo-description">{{ todo.description }}</span>
+          </div>
           <button class="delete-btn" @click="deleteTodo(todo, index)">
             Delete
           </button>
@@ -45,13 +47,13 @@ export default {
     }
   },
     async mounted() {
-      const response = await axios.get('/api/Todolist')
+      const response = await axios.get('./routes/api/Todolist')
       this.todos = response.data
     },
     methods: {
       async addTodo(e) {
         e.preventDefault()
-        const response = await axios.post('/api/Todolist', {
+        const response = await axios.post('./routes/api/Todolist/', {
           title: this.title,
           description: this.description,
         })
@@ -60,7 +62,7 @@ export default {
         this.description = ''
       },
       async deleteTodo(item, index) {
-        await axios.delete('api/Todolist/' + item._id)
+        await axios.delete('./routes/api/Todolist/' + item._id)
         this.todos.splice(index, 1)
       },
     }
