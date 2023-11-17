@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start:client": "npm run serve --prefix '../client'"
+    "dev": "npm run serve --prefix '../client'"
   },
   "dependencies": {
     "axios": "^1.6.2",

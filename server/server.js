@@ -1,21 +1,34 @@
-const mongoose = require('mongoose');
+const { MongoClient, ServerApiVersion } = require('mongodb')
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config()
 const express = require('express')
 const app = express()
 const TodoListRoutes = require('./routes/api/Todolist')
-require('dotenv').config()
-const path  = require('path')
 
 app.use(cors())
 app.use(bodyParser.json())
-app.use('/api/Todolist', TodoListRoutes)
+app.use('./routes/api/Todolist', TodoListRoutes)
 
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected...'))
-  .catch((err) => console.log(err));
+const uri = "mongodb+srv://devonhickle:Crowing33@cluster1.8nqhkve.mongodb.net/?retryWrites=true&w=majority"
 
-app.listen(process.env.PORT, () => console.log(`Server is running on port ${process.env.PORT}.`));
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true
+  }
+})
+
+async function run() {
+  try {
+    await client.connect()
+
+    await client.db("admin").command({ ping: 1 })
+    console.log('Successfully connected to MongoDB')
+  } finally {
+    await client.close()
+  }
+}
+
+run().catch(console.dir)

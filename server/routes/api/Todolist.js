@@ -16,15 +16,15 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const newTodo = new Todo(req.body) 
     try {
-        const todos = await newTodo.save();
-        if (!todos) throw new Error('Error saving note');
-        res.status(200).json(todos)
+        const todo = await newTodo.save();
+        if (!todo) throw new Error('Error saving note');
+        res.status(200).json(todo)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
 })
 
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const { id } = req.params
     try {
         const removed = await Todo.findByIdAndDelete();

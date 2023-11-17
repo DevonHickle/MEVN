@@ -6,24 +6,24 @@
         type="text"
         placeholder="Title"
         v-model="text"
-        class="form-control"
+        class="input"
       />
       <input
         type="text"
         placeholder="Description"
         v-model="description"
-        class="form-control"
+        class="input"
       />
-      <button class="btn btn-primary" @click="addTodo">
+      <button class="submit-button" @click="addTodo">
         Add Todo
       </button>
     </form>
     <div class="todo-container">
       <ul>
         <li v-for="(todo, index) in todos" :key="todo._id">
-          <h4>{{ todo.title }}</h4>
-          <span>{{ todo.description }}</span>
-          <button class="btn btn-danger" @click="deleteTodo(todo, index)">
+          <h4 class="todo-name">{{ todo.title }}</h4>
+          <span class="todo-description">{{ todo.description }}</span>
+          <button class="delete-btn" @click="deleteTodo(todo, index)">
             Delete
           </button>
         </li>
@@ -49,7 +49,8 @@ export default {
       this.todos = response.data
     },
     methods: {
-      async addTodo() {
+      async addTodo(e) {
+        e.preventDefault()
         const response = await axios.post('/api/Todolist', {
           title: this.title,
           description: this.description,
